@@ -4,16 +4,23 @@ var setupRedis = require('./redis'),
 
 // configure mongo
 var mongoUrl = process.env.MONGO_URL || process.env.MONGOHQ_URL ||
-  'mongodb://localhost:27017/svgPoc';
+ 'mongodb://template_app:mongo123@badurl.oceanic.mongohq.com:10002/template_data';
 
+//  'mongodb://localhost:27017/svgPoc';
+ 
+ 
 // configure racer.js store
 var livedb = require('livedb');
+var memoryDb = livedb.memory();
+
+console.log('mongoUrl: ' + mongoUrl);
 
 var store = racer.createStore({
   backend: livedb.client({
     redis: setupRedis.client,
     redisObserver: setupRedis.observer,
     db: liveDbMongo(mongoUrl + '?auto_reconnect', {safe: true})
+//    db: memoryDb
   })
 });
 
